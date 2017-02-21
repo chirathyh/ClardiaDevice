@@ -1,6 +1,21 @@
 // ##########  CLARDIA 1.0  - OLIVESCRIPT (PVT) LTD  ############
 
 
+/* The wire connections
+HX Module
+white - vcc (+5)
+grey - A1
+purple - A0
+blue - ground 
+
+7 Segment Display
+orange - ground
+yellow - vcc (+5)
+red - 4 
+green - 3
+brown - 2
+*/
+
 
 #include "HX711.h"
 HX711 scale(A1, A0);                            // HX711.DOUT	- pin #A1  ,  HX711.PD_SCK	- pin #A0
