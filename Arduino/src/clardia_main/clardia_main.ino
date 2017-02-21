@@ -1,6 +1,6 @@
 // ##########  CLARDIA 1.0  - OLIVESCRIPT (PVT) LTD  ############
-//tests
-ffffs
+
+
 
 #include "HX711.h"
 HX711 scale(A1, A0);                            // HX711.DOUT	- pin #A1  ,  HX711.PD_SCK	- pin #A0
