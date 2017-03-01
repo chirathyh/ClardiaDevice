@@ -62,14 +62,14 @@ void setup() {
   //initializing the display
   mydisplay.shutdown(0, false);  // turns on display
   mydisplay.setIntensity(0, 15); // 15 = brightest
-  mydisplay.setDigit(0, 0, 9, false);
-  mydisplay.setDigit(0, 1, 8, false);
-  mydisplay.setDigit(0, 2, 7, false);
-  mydisplay.setDigit(0, 3, 6, false);
-  mydisplay.setDigit(0, 4, 5, true);
-  mydisplay.setDigit(0, 5, 4, false);
-  mydisplay.setDigit(0, 6, 3, false);
-  mydisplay.setDigit(0, 7, 2, false);
+  mydisplay.setDigit(0, 0, 0, false);
+  mydisplay.setDigit(0, 1, 0, false);
+  mydisplay.setDigit(0, 2, 0, false);
+  mydisplay.setDigit(0, 3, 0, false);
+  mydisplay.setDigit(0, 4, 0, false);
+  mydisplay.setDigit(0, 5, 0, false);
+  mydisplay.setDigit(0, 6, 0, false);
+  mydisplay.setDigit(0, 7, 0, false);
   
 }
 
@@ -83,9 +83,11 @@ void loop() {
   Serial.println("Actual Weight of the Person: ");
   Serial.println(y/10);
 
-  //print the number
   
+  //print the weight figure in the display
   printNumber(y);
+  
+  
   
   
   scale.power_down();			        // put the ADC in sleep mode
@@ -94,33 +96,22 @@ void loop() {
 
 }
 
-void printNumber(int v) {  
-    int ones;  
-    int tens;  
-    int hundreds; 
-
-    boolean negative=false;
-
-    if(v < -999 || v > 999)  
-        return;  
-    if(v<0) {  
-        negative=true; 
-        v=v*-1;  
-    }
-    ones=v%10;  
-    v=v/10;  
-    tens=v%10;  
-    v=v/10; hundreds=v;  
-    if(negative) {  
-        //print character '-' in the leftmost column  
-        mydisplay.setChar(0,3,'-',false);  } 
-    else {
-        //print a blank in the sign column  
-        mydisplay.setChar(0,3,' ',false);  
-    }  
-    //Now print the number digit by digit 
-    mydisplay.setDigit(0,2,(byte)hundreds,false);
-    mydisplay.setDigit(0,1,(byte)tens,false); 
-    mydisplay.setDigit(0,0,(byte)ones,false); 
+void printNumber(float y) {  
+  
+  int integerPart = (int) y;          
+  int decimal = integerPart%10;        
+  integerPart = integerPart/10;        
+  int ones = integerPart%10;          
+  integerPart = integerPart/10;      
+  int tens = integerPart%10;          
+  integerPart = integerPart/10;        
+  int hundreds = integerPart;
+  
+  
+  mydisplay.setDigit(0,0,decimal,false);
+  mydisplay.setDigit(0,1,ones,true);
+  mydisplay.setDigit(0,2,tens,false);
+  mydisplay.setDigit(0,3,hundreds,false); 
+    
 } 
 
