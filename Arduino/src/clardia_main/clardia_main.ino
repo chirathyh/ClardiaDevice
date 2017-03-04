@@ -1,35 +1,26 @@
+
 // ##########  CLARDIA 1.0  - OLIVESCRIPT (PVT) LTD  ############
 
-
-/* The wire connections
-HX Module
-white - vcc (+5)
-grey - A1
-purple - A0
-blue - ground 
-
-7 Segment Display
-orange - ground
-yellow - vcc (+5)
-red - 4 
-green - 3
-brown - 2
-*/
-
-
-#include "HX711.h"
-HX711 scale(A1, A0);                            // HX711.DOUT	- pin #A1  ,  HX711.PD_SCK	- pin #A0
-
+#include <HX711.h>                           
 #include <LedControl.h>
+//#include <ESP8266.h>
+
+HX711 scale(A1, A0);
+
 LedControl mydisplay = LedControl(4, 2, 3, 1);
-unsigned int count = 0;
-unsigned int count_one = 0;
-unsigned int count_two = 0;
+
+#define SSID        "Dialog 4G"
+#define PASSWORD    "8JBNRFRN4HA"
+#define HOST_NAME   "192.168.8.100"
+#define HOST_PORT   (80)
+//ESP8266 wifi(Serial1,115200);
+
 
 void setup() {
   
-  Serial.begin(38400);
-  Serial.println("CLARDIA DEMO");
+  //Serial.begin(38400);
+  Serial.begin(19200);
+  Serial.println("CLARDIA DEMO - OLIVESCRIPT (PVT) LTD");
 
 
   // initializing the scale......
@@ -66,7 +57,7 @@ void setup() {
   mydisplay.setDigit(0, 1, 0, false);
   mydisplay.setDigit(0, 2, 0, false);
   mydisplay.setDigit(0, 3, 0, false);
-  mydisplay.setDigit(0, 4, 0, false);
+  //mydisplay.setDigit(0, 4, 0, false);
   mydisplay.setDigit(0, 5, 0, false);
   mydisplay.setDigit(0, 6, 0, false);
   mydisplay.setDigit(0, 7, 0, false);
@@ -74,6 +65,7 @@ void setup() {
 }
 
 void loop() {
+    
   //Serial.print("one reading:\t");
   float x = scale.get_units();
   //Serial.print(x, 1);
@@ -96,7 +88,9 @@ void loop() {
 
 }
 
-void printNumber(float y) {  
+
+//Function to print the weight figure according to the requirements. 
+void printNumber(float y) { 
   
   int integerPart = (int) y;          
   int decimal = integerPart%10;        
@@ -107,11 +101,46 @@ void printNumber(float y) {
   integerPart = integerPart/10;        
   int hundreds = integerPart;
   
-  
   mydisplay.setDigit(0,0,decimal,false);
   mydisplay.setDigit(0,1,ones,true);
   mydisplay.setDigit(0,2,tens,false);
-  mydisplay.setDigit(0,3,hundreds,false); 
-    
+  
+  if (hundreds != 0){
+    mydisplay.setDigit(0,3,hundreds,false); 
+  }
+  else{
+  mydisplay.setLed(0, 3, 0, false);
+  mydisplay.setLed(0, 3, 1, false);
+  mydisplay.setLed(0, 3, 2, false);
+  mydisplay.setLed(0, 3, 3, false);
+  mydisplay.setLed(0, 3, 4, false);
+  mydisplay.setLed(0, 3, 5, false);
+  mydisplay.setLed(0, 3, 6, false);
+  mydisplay.setLed(0, 3, 7, false);
+  }
 } 
+
+
+
+
+
+/* The wire connections
+HX Module
+white - vcc (+5)
+grey - A1
+purple - A0
+blue - ground 
+
+7 Segment Display
+orange - ground
+yellow - vcc (+5)
+red - 4 
+green - 3
+brown - 2
+*/
+
+// HX711.DOUT	- pin #A1  ,  HX711.PD_SCK	- pin #A0
+
+
+
 
