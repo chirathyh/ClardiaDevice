@@ -15,8 +15,17 @@ class MainFrame(wx.Frame):
       self.Bind(wx.EVT_PAINT, self.OnPaint)
 
 
+      #pnl = wx.Panel(self)
+      wx.StaticBox(panel, label='Patient Information ', pos = (5,5), size = (500,750))
+
+
+      #clardia_logo
+     
+      #self.png = wx.StaticBitmap(self, -1, wx.Bitmap("clardia_logo.png", wx.BITMAP_TYPE_ANY))
+      
+
       #static texts
-      wx.StaticText (panel, -1 , "Patient Information " , (10,20))
+      #wx.StaticText (panel, -1 , "Patient Information " , (10,20))
       wx.StaticText (panel, -1 , "Patient ID: " , (10,50))
       self.name = wx.TextCtrl(panel,pos = (10, 70), size = (450,20),style = wx.TE_MULTILINE)
       
@@ -54,6 +63,8 @@ class MainFrame(wx.Frame):
 
       self.Centre()
       self.Show(True)
+      self.Maximize(True)
+
 
    def onStartClick(self,event):
       #start reading from serial
@@ -93,6 +104,9 @@ class MainFrame(wx.Frame):
         dc.Clear()
         dc.SetPen(wx.Pen(wx.BLACK, 2))
         dc.DrawLine(500, 0, 500, 800)
+
+        png = wx.Image('clardia_logo.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.imageCtrl = wx.StaticBitmap(self, -1, png, (950, 0), (png.GetWidth(), png.GetHeight()))
 
 
 # Main program
